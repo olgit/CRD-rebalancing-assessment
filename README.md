@@ -59,7 +59,9 @@ Security centralizes the securities and their test data so the same data can be 
 
 crd-alpha-rebalancing-assessment/
 ├── .gitignore
+├── North American - Technical Assessment QA.docx
 ├── README.md
+├── automated-test-cases.md
 ├── manual-test-cases.md
 ├── pom.xml
 └── src/
@@ -71,5 +73,4 @@ crd-alpha-rebalancing-assessment/
     └── test/
         └── java/
             └── RebalancingCalculatorTest.java
-
             
