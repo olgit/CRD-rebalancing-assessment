@@ -78,3 +78,14 @@ Verify that the application returns fractional share quantities instead of round
 - ORCL: SELL 45.4545 shares
 
 The automated test should allow for a small decimal precision difference when comparing the calculated result.
+
+### ATC06 - Verify cash balance after rebalance
+
+**Expected result**
+
+IBM purchase value: $10,000
+ORCL sale value: $10,000
+Net cash impact: $0
+Cash balance: >= $0
+
+*Automation note: This scenario is currently covered as a manual business check because cash balance is not an output of the assessment implementation.

@@ -24,8 +24,17 @@
 
 11. Verify that the cash balance does not become negative after executing the rebalance.
 
+12. Verify that cash balance is greater than or equal to $0 after the rebalance.
 
-## Expected Results
+
+### Expected Result
+
+When fractional shares are calculated using full precision:
+
+- IBM purchase value = $10,000
+- ORCL sale value = $10,000
+- Net cash impact = $0
+- Cash balance must be >= $0
 
 ### Fractional Shares Allowed
 

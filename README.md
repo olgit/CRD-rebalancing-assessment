@@ -49,12 +49,13 @@ Total account assets: **$100,000**
 ## Assumptions
 
 - Fractional-share support and the whole-share rounding policy must be confirmed with the financial platform.
+- Fractional shares are supported. Share calculations use full precision; quantities shown in test results are rounded to 4 decimal places for readability.
 - The provided unit price is used for the calculation.
 - Transaction fees, taxes, slippage, and market-price changes are out of scope.
 - Percentages are provided as values such as `20` for 20%.
 
 ## Project Structure
-Security centralizes the securities and their test data so the same data can be reused across multiple test scenarios and updated in one place.
+RebalanceTestData centralizes the securities and their test data so the same data can be reused across multiple test scenarios and updated in one place.
 
 ```text
 crd-alpha-rebalancing-assessment/
@@ -69,7 +70,7 @@ crd-alpha-rebalancing-assessment/
     │   └── java/
     │       ├── RebalancingCalculator.java
     │       └── enums/
-    │           └── Security.java
+    │           └── RebalanceTestData.java
     └── test/
         └── java/
             └── RebalancingCalculatorTest.java

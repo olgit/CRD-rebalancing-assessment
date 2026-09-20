@@ -1,7 +1,7 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
-import enums.Security;
+import testdata.RebalanceTestData;
 
 class RebalancingCalculatorTest {
 
@@ -12,14 +12,14 @@ class RebalancingCalculatorTest {
 
         // IBM is below its target allocation, so the expected action is BUY.
         String action = RebalancingCalculator.getAction(
-                Security.IBM.getTargetPercent(),
-                Security.IBM.getCurrentPercent());
+                RebalanceTestData.IBM.targetPercent(),
+                RebalanceTestData.IBM.currentPercent());
 
         double shares = RebalancingCalculator.calculateShares(
                 TOTAL_ASSETS,
-                Security.IBM.getTargetPercent(),
-                Security.IBM.getCurrentPercent(),
-                Security.IBM.getUnitPrice());
+                RebalanceTestData.IBM.targetPercent(),
+                RebalanceTestData.IBM.currentPercent(),
+                RebalanceTestData.IBM.unitPrice());
 
         // Verify the application returns the expected action and share quantity.
         assertEquals("BUY", action);
@@ -31,14 +31,14 @@ class RebalancingCalculatorTest {
 
         // ORCL is above its target allocation, so the expected action is SELL.
         String action = RebalancingCalculator.getAction(
-                Security.ORCL.getTargetPercent(),
-                Security.ORCL.getCurrentPercent());
+                RebalanceTestData.ORCL.targetPercent(),
+                RebalanceTestData.ORCL.currentPercent());
 
         double shares = RebalancingCalculator.calculateShares(
                 TOTAL_ASSETS,
-                Security.ORCL.getTargetPercent(),
-                Security.ORCL.getCurrentPercent(),
-                Security.ORCL.getUnitPrice());
+                RebalanceTestData.ORCL.targetPercent(),
+                RebalanceTestData.ORCL.currentPercent(),
+                RebalanceTestData.ORCL.unitPrice());
 
         // Verify the application returns the expected action and share quantity.
         assertEquals("SELL", action);
@@ -50,14 +50,14 @@ class RebalancingCalculatorTest {
 
         // MSFT is already at its target allocation, so no trade should be needed.
         String action = RebalancingCalculator.getAction(
-                Security.MSFT.getTargetPercent(),
-                Security.MSFT.getCurrentPercent());
+                RebalanceTestData.MSFT.targetPercent(),
+                RebalanceTestData.MSFT.currentPercent());
 
         double shares = RebalancingCalculator.calculateShares(
                 TOTAL_ASSETS,
-                Security.MSFT.getTargetPercent(),
-                Security.MSFT.getCurrentPercent(),
-                Security.MSFT.getUnitPrice());
+                RebalanceTestData.MSFT.targetPercent(),
+                RebalanceTestData.MSFT.currentPercent(),
+                RebalanceTestData.MSFT.unitPrice());
 
         // Verify that no trade is recommended.
         assertEquals("NO ACTION", action);
@@ -67,52 +67,81 @@ class RebalancingCalculatorTest {
     @Test
     void shouldCalculateCompleteCRDExample() {
 
-        // Validate the expected share quantities for all five securities
-        // from the CRD assessment example.
+        // Verify the expected action for all five securities.
+        assertEquals(
+                "BUY",
+                RebalancingCalculator.getAction(
+                        RebalanceTestData.IBM.targetPercent(),
+                        RebalanceTestData.IBM.currentPercent()));
 
+        assertEquals(
+                "NO ACTION",
+                RebalancingCalculator.getAction(
+                        RebalanceTestData.MSFT.targetPercent(),
+                        RebalanceTestData.MSFT.currentPercent()));
+
+        assertEquals(
+                "SELL",
+                RebalancingCalculator.getAction(
+                        RebalanceTestData.ORCL.targetPercent(),
+                        RebalanceTestData.ORCL.currentPercent()));
+
+        assertEquals(
+                "NO ACTION",
+                RebalancingCalculator.getAction(
+                        RebalanceTestData.AAPL.targetPercent(),
+                        RebalanceTestData.AAPL.currentPercent()));
+
+        assertEquals(
+                "NO ACTION",
+                RebalancingCalculator.getAction(
+                        RebalanceTestData.HD.targetPercent(),
+                        RebalanceTestData.HD.currentPercent()));
+
+        // Verify the expected share quantities for all five securities.
         assertEquals(
                 66.6667,
                 RebalancingCalculator.calculateShares(
                         TOTAL_ASSETS,
-                        Security.IBM.getTargetPercent(),
-                        Security.IBM.getCurrentPercent(),
-                        Security.IBM.getUnitPrice()),
+                        RebalanceTestData.IBM.targetPercent(),
+                        RebalanceTestData.IBM.currentPercent(),
+                        RebalanceTestData.IBM.unitPrice()),
                 0.0001);
 
         assertEquals(
                 0,
                 RebalancingCalculator.calculateShares(
                         TOTAL_ASSETS,
-                        Security.MSFT.getTargetPercent(),
-                        Security.MSFT.getCurrentPercent(),
-                        Security.MSFT.getUnitPrice()),
+                        RebalanceTestData.MSFT.targetPercent(),
+                        RebalanceTestData.MSFT.currentPercent(),
+                        RebalanceTestData.MSFT.unitPrice()),
                 0.0001);
 
         assertEquals(
                 45.4545,
                 RebalancingCalculator.calculateShares(
                         TOTAL_ASSETS,
-                        Security.ORCL.getTargetPercent(),
-                        Security.ORCL.getCurrentPercent(),
-                        Security.ORCL.getUnitPrice()),
+                        RebalanceTestData.ORCL.targetPercent(),
+                        RebalanceTestData.ORCL.currentPercent(),
+                        RebalanceTestData.ORCL.unitPrice()),
                 0.0001);
 
         assertEquals(
                 0,
                 RebalancingCalculator.calculateShares(
                         TOTAL_ASSETS,
-                        Security.AAPL.getTargetPercent(),
-                        Security.AAPL.getCurrentPercent(),
-                        Security.AAPL.getUnitPrice()),
+                        RebalanceTestData.AAPL.targetPercent(),
+                        RebalanceTestData.AAPL.currentPercent(),
+                        RebalanceTestData.AAPL.unitPrice()),
                 0.0001);
 
         assertEquals(
                 0,
                 RebalancingCalculator.calculateShares(
                         TOTAL_ASSETS,
-                        Security.HD.getTargetPercent(),
-                        Security.HD.getCurrentPercent(),
-                        Security.HD.getUnitPrice()),
+                        RebalanceTestData.HD.targetPercent(),
+                        RebalanceTestData.HD.currentPercent(),
+                        RebalanceTestData.HD.unitPrice()),
                 0.0001);
     }
 
@@ -122,18 +151,17 @@ class RebalancingCalculatorTest {
         // Fractional shares are allowed for this test.
         // Verify that the application returns fractional quantities
         // instead of rounding to whole shares.
-
         double ibmShares = RebalancingCalculator.calculateShares(
                 TOTAL_ASSETS,
-                Security.IBM.getTargetPercent(),
-                Security.IBM.getCurrentPercent(),
-                Security.IBM.getUnitPrice());
+                RebalanceTestData.IBM.targetPercent(),
+                RebalanceTestData.IBM.currentPercent(),
+                RebalanceTestData.IBM.unitPrice());
 
         double orclShares = RebalancingCalculator.calculateShares(
                 TOTAL_ASSETS,
-                Security.ORCL.getTargetPercent(),
-                Security.ORCL.getCurrentPercent(),
-                Security.ORCL.getUnitPrice());
+                RebalanceTestData.ORCL.targetPercent(),
+                RebalanceTestData.ORCL.currentPercent(),
+                RebalanceTestData.ORCL.unitPrice());
 
         // Verify the expected fractional share quantities.
         assertEquals(66.6667, ibmShares, 0.0001);
