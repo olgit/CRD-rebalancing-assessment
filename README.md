@@ -54,9 +54,9 @@ Total account assets: **$100,000**
 - Percentages are provided as values such as `20` for 20%.
 
 ## Project Structure
-
 Security centralizes the securities and their test data so the same data can be reused across multiple test scenarios and updated in one place.
 
+```text
 crd-alpha-rebalancing-assessment/
 ├── .gitignore
 ├── North American - Technical Assessment QA.docx
